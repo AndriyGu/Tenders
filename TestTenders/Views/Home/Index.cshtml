@@ -1,0 +1,274 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <style>
+        .tableData {
+          //  border-left: solid 1px #D8C3C3;
+          //  border-top: solid 1px #D8C3C3;
+        }
+
+        .tableData tr:hover {
+            background-color: #ccc;
+        }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+           // border-right: solid 1px #D8C3C3; 
+           // border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+        .odd {
+            background-color: #f3f3f3;
+        }
+
+        .even {
+            background-color: #ffffff;
+        }
+
+        .filter {
+            width: 130px;
+        }
+
+        .filtertext {
+            width: 90%;
+        }
+
+        .tdfilt {
+            width: 10%;
+        }
+        .tddb {
+            width: 90%;
+        }
+        .tabledb{
+            width: 100%;
+        }
+        .borderless{
+            border : 0;
+        }
+    </style>
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/AngularController/Homejs.js"></script>
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</head>
+<body ng-app="Homeapp">
+    <div ng-controller="HomeController">
+        <table>
+            <tr>
+                <td valign="top" class="tdfilt">
+                    Организатор:
+                    <select class="form-control control-color filter" ng-model="orgFilter" ng-change="filterchanged()">
+
+                        <option ng-repeat="e in orgdata" value="{{e.Id}}">{{e.OrgTender}}</option>
+                    </select>
+
+                    Вид тендера:
+                    <select class="form-control control-color filter" ng-model="typeFilter" ng-change="filterchanged()">
+                        <option ng-repeat="e in typedata" value="{{e.Id}}">{{e.Type}}</option>
+                    </select>
+
+                    Дата с:
+                    <select class="form-control control-color filter" ng-model="fromFilter" ng-change="filterchanged()">
+                        <option ng-repeat="e in fromdate" value="{{e.date}}">{{e.date}}</option>
+                    </select>
+
+                    Дата по:
+                    <select class="form-control control-color filter" ng-model="toFilter" ng-change="filterchanged()">
+                        <option ng-repeat="e in todate" value="{{e.date}}">{{e.date}}</option>
+                    </select>
+
+                </td>
+                <td class="tddb" valign="top">
+                    <table class="tabledb">
+                        <tr>
+                            <td>Search: <input type="text" ng-change="searchChange()" ng-model="searchText" class="filtertext"></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table class="tableData tabledb">
+                                   
+                                <!--    Type 
+                                    OrgTender
+                                    Currency
+                                    Category -->
+
+                                    <tr ng-repeat="e in regdata" ng-class-even="'even'" ng-class-odd="'odd'"
+                                        ng-click="row_clicked(e.Id)">
+                                        <td>    
+                                            <table width="100%" class="borderless">
+                                                <tr>
+                                                    <td width="33%">
+                                                        <table>
+                                                            <tr>
+                                                                <td>{{e.Id}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>{{e.ObjTender}}</td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>{{e.OrgTender}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td width="33%">
+                                                        <table>
+                                                            <tr>
+                                                                <td>{{e.Budget}}  {{e.Currency}} </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+
+                                                    <td width="33%">
+                                                        <table>
+                                                            <tr>Прием предложений</tr>
+
+                                                            <tr>
+                                                                <td>c {{e.StartDate}} <br>
+                                                                по {{e.EndDate}}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item" ng-repeat="i in [].constructor(pagenr) track by $index">
+                                <a class="page-link" href="#" ng-click="page_click($index)">{{$index+1}}</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </td>
+            </tr>
+        </table>
+        
+        <table class="tableData" id="detailedTable">
+            <tr ng-class-even="'even'" ng-class-odd="'odd'">
+               
+                
+                <td>
+                    <table width="100%">
+                        <tr>
+                            <td width="66%">
+                                <table>
+                                    <tr>
+                                        <td>{{detailed[0].Id}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{detailed[0].ObjTender}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{detailed[0].DeskTender}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{detailed[0].Type}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>{{detailed[0].Category}}</td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <td width="33%">
+                                <table>
+                                    <tr>
+                                        <td> Статус </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Начальная ставка {{detailed[0].Budget}}  {{detailed[0].Currency}} </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                             <td width="100%">
+                                 <table>
+                                     <tr>
+                                         <td>Организатор {{detailed[0].OrgTender}} </td>
+                                     </tr>
+                                     <tr>
+                                         <td>ЕГРПОУ {{detailed[0].OrgTender}} </td>
+                                     </tr>
+                                 </table>
+                             </td>
+                        <tr>
+
+                        </tr>
+                            <td width="33%">
+                                <table>
+                                    <tr>
+                                        <td>{{detailed[0].Budget}}  {{detailed[0].Currency}} </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        <tr>
+
+                        </tr>
+                    </table>
+                </td>
+                
+                
+                
+                
+                
+                
+                
+                
+             <!--  <td>{{detailed[0].Id}}</td>
+                <td>{{detailed[0].ObjTender}}</td>
+                <td>{{detailed[0].DeskTender}}</td>
+                <td>{{detailed[0].OrgID}}</td>
+                <td>{{detailed[0].TypeID}}</td>
+                <td>{{detailed[0].CategoryID}}</td>
+                <td>{{detailed[0].Budget}}</td>
+                <td>{{detailed[0].CurrencyID}}</td>
+                <td>{{detailed[0].SrartDate}}</td>
+                <td>{{detailed[0].EndDate}}</td>
+                <td>{{detailed[0].PubDate}}</td>-->
+            </tr>
+        </table>        
+    </div>
+</body>
+</html>

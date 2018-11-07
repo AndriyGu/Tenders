@@ -1,0 +1,25 @@
+ 
+                                        <td>{{e.DeskTender}}</td>
+                                        
+                                        <td>{{e.TypeID}}</td>
+                                        <td>{{e.CategoryID}}</td>
+                                        
+                                        <td></td>
+                                        
+                                        
+                                        <td>{{e.PubDate}}</td>
+
+
+ <tr>
+                                        <th>Id</th>
+                                        <th>ObjTender</th>
+                                        <th>DeskTender</th>
+                                        <th>OrgID</th>
+                                        <th>TypeID</th>
+                                        <th>CategoryID</th>
+                                        <th>Budget</th>
+                                        <th>CurrencyID</th>
+                                        <th>StartDate</th>
+                                        <th>EndDate</th>
+                                        <th>PubDate</th>
+                                    </tr>
